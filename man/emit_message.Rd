@@ -16,7 +16,7 @@ of \code{"`{.f_name}()` INFO: {text}"} will
 be used.}
 
 \item{.f_name}{the name of the function that
-relates to the messsage.}
+relates to the message.}
 }
 \description{
 Create a message using a message body that
