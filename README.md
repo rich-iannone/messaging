@@ -8,9 +8,9 @@ The goal of **messaging** is to provides a toolset for creating and issuing nice
 Example for Emitting Messages
 -----------------------------
 
-Below is a function that uses the `emit_message()` function to just display a message. Within the main function body, we can create/collect character and numeric values and compose our message with a combination of these function-scope objects and templating strings in the `emit_message()` function. Unnamed argument values are components of the message, and several of these can be included (newlines will separate them). Named arguments (e.g., `number = 3`, `level = "high"`, etc.) provide values (numerical or textual) for the message components. Using curly braces, we can provide placeholders for interpolation of those named values.
+Below is a function that uses the `emit_message()` function to just display a message. Within the main function body, we can create/collect character and numeric values and compose our message with a combination of these function-scope objects and templating strings in the `emit_message()` function. Unnamed argument values are components of the message, and several of these can be included (newlines will separate them). Named arguments (e.g., `number = 3`, `level = "high"`, etc.) provide values (numerical or textual) for the message components. Using curly braces, we can provide placeholders for interpolation of those named values (e.g., `The number is {number} and this is considered {level}`).
 
-If there is interpolation of numerical values, there is also the option to provide singular and plural forms of words in the relevant statements. Simply enclose the singular and plural alternatives in parentheses and the function will finalized the statement based on the associated numerical value. Some syntax examples are: `(is/are)`, `analys(is/es)`, `result(s)`.
+If there is interpolation of numerical values, there is also the option to provide singular and plural forms of words in the relevant statements. Simply enclose the singular and plural alternatives in parentheses and the function will finalize the statement based on the associated numerical value. Some syntax examples are: `(is/are)`, `analys(is/es)`, `result(s)`.
 
 Here is the `yield_a_message()` function.
 
