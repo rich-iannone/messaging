@@ -18,8 +18,8 @@
 #' @param .f_name the name of the function that
 #' relates to the messsage.
 #' @importFrom glue glue
-#' @importFrom dplyr tibble mutate
-#' @importFrom stringr str_replace_all str_replace str_detect
+#' @importFrom dplyr tibble mutate case_when
+#' @importFrom stringr str_replace_all str_replace str_detect fixed
 #' @importFrom rlang is_named
 #' @export
 emit_message <- function(...,
@@ -76,7 +76,7 @@ emit_message <- function(...,
   nonnumeric_refs <- names(named_nonnumeric_input_components)
 
   # Get all text into a single-length character object
-  .text <- squash_all_text(unnamed_input_components)
+  text <- squash_all_text(unnamed_input_components)
 
   # If a custom `.format` provided, then use that as
   # the `format_str` object; otherwise, use the default
@@ -87,7 +87,7 @@ emit_message <- function(...,
 
   } else if (is.null(.format)) {
 
-    format_str <- "{.f_name}INFO: {.text}"
+    format_str <- "{.f_name}INFO: {text}"
   }
 
   # If `.f_name` is TRUE then obtain the function name
@@ -185,7 +185,6 @@ emit_message <- function(...,
           pattern = fixed(sing_plu_tbl[i, ]$alternates),
           replacement = sing_plu_tbl[i, ]$form)
     }
-
 
     for (i in 1:nrow(sing_plu_tbl)) {
 
