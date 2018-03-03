@@ -16,7 +16,7 @@
 #' of \code{"`{.f_name}()` INFO: {text}"} will
 #' be used.
 #' @param .f_name the name of the function that
-#' relates to the messsage.
+#' relates to the message.
 #' @importFrom glue glue
 #' @importFrom dplyr tibble mutate case_when
 #' @importFrom stringr str_replace_all str_replace str_detect fixed
