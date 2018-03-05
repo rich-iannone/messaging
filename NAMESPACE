@@ -2,6 +2,7 @@
 
 export("%>%")
 export(emit_message)
+export(emit_warning)
 importFrom(dplyr,case_when)
 importFrom(dplyr,mutate)
 importFrom(dplyr,tibble)
