@@ -15,7 +15,9 @@ message. If not provided, the default template
 of \code{"{.f_name}: {text}"} will be used.}
 
 \item{.f_name}{the name of the function that
-relates to the message.}
+relates to the message. If not provided, the
+function name will be obtained from the
+function call stack.}
 
 \item{.issue}{a logical value that indicates
 whether the message should be issued at all.
