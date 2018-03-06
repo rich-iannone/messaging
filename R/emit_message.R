@@ -16,18 +16,22 @@
 #' message. If not provided, the default template
 #' of \code{"{.f_name}: {text}"} will be used.
 #' @param .f_name the name of the function that
-#' relates to the message.
+#' relates to the message. If not provided, the
+#' function name will be obtained from the
+#' function call stack.
 #' @param .issue a logical value that indicates
 #' whether the message should be issued at all.
 #' This is to control for the verbosity of
 #' messages under certain circumstances.
 #' @importFrom glue glue
-#' @importFrom stringr str_replace_all
 #' @export
 emit_message <- function(...,
                          .format = NULL,
                          .f_name = TRUE,
                          .issue = TRUE) {
+
+  # Get the calling function
+  calling_fcn <- deparse(sys.call(-1))
 
   # If `.issue` evaluates to TRUE then
   # follow through to formatting and emitting
@@ -61,41 +65,14 @@ emit_message <- function(...,
     # Get all text into a single-length character object
     text <- squash_all_text(unnamed_input_components)
 
-    # If a custom `.format` provided, then use that as
-    # the `format_str` object; otherwise, use the default
-    # format string
-    if (!is.null(.format) && is.character(.format)) {
+    # Process the format string (`format_str`)
+    format_str <- process_format_str(.format = .format)
 
-      format_str <- .format[1]
-
-    } else if (is.null(.format)) {
-
-      format_str <- "{.f_name}: {text}"
-    }
-
-    # If `.f_name` is TRUE then obtain the function name
-    # that is the caller of this function
-    if (!is.null(.f_name) && is.logical(.f_name) && isTRUE(.f_name)) {
-
-      calling_fcn <- deparse(sys.call(-1))
-
-      .f_name <-
-        stringr::str_replace_all(
-          calling_fcn,
-          pattern = "([a-z0-9_]*)(.*)",
-          replacement = "\\1") %>%
-        paste0("`", .) %>%
-        paste0("()`")
-
-    } else if (is.null(.f_name) ||
-               !is.null(.f_name) && is.logical(.f_name) && !isTRUE(.f_name)) {
-
-      .f_name <- ""
-
-    } else if (!is.null(.f_name) && is.character(.f_name)) {
-
-      .f_name <- .f_name[1] %>% paste0("`", .) %>% paste0("()` ")
-    }
+    # Process the function name to be used in `format_str`
+    .f_name <-
+      process_function_name(
+        .f_name = .f_name,
+        calling_fcn = calling_fcn)
 
     # Incorporate the message text into the format string
     format_str <-
