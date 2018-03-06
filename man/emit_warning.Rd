@@ -4,7 +4,7 @@
 \alias{emit_warning}
 \title{Provide a warning with a consistent format}
 \usage{
-emit_warning(..., .format = NULL, .f_name = TRUE)
+emit_warning(..., .format = NULL, .f_name = TRUE, .issue = TRUE)
 }
 \arguments{
 \item{...}{a collection of string expressions
@@ -17,6 +17,9 @@ be used.}
 
 \item{.f_name}{the name of the function that
 caused the warning.}
+
+\item{.issue}{a logical value that indicates
+whether a warning should be issued at all.}
 }
 \description{
 Create a warning using a message body that

@@ -4,7 +4,7 @@
 \alias{emit_message}
 \title{Provide a message with a consistent format}
 \usage{
-emit_message(..., .format = NULL, .f_name = TRUE)
+emit_message(..., .format = NULL, .f_name = TRUE, .issue = TRUE)
 }
 \arguments{
 \item{...}{a collection of string expressions
@@ -17,6 +17,11 @@ be used.}
 
 \item{.f_name}{the name of the function that
 relates to the message.}
+
+\item{.issue}{a logical value that indicates
+whether the message should be issued at all.
+This is to control for the verbosity of
+messages under certain circumstances.}
 }
 \description{
 Create a message using a message body that
