@@ -12,8 +12,7 @@ and named arguments for string interpolation.}
 
 \item{.format}{a format template for a
 message. If not provided, the default template
-of \code{"{.f_name}: {text}"} will
-be used.}
+of \code{"{.f_name}: {text}"} will be used.}
 
 \item{.f_name}{the name of the function that
 caused the warning.}
