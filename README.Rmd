@@ -35,21 +35,22 @@ yield_a_message <- function() {
   # can generate objects that can be assembled
   # into a customizable message with `emit_message()`
   
-  # Get a numeric value to use in the message
-  number_of_problems <- 3
-  
   # Create some strings can serve as additional
   # info for the message 
-  additional_info <- 
-    c("* additional note 1",
-      "* additional note 2")
+  important_message_parts <- 
+    c("* message info part 1",
+      "* message info part 2",
+      "* message info part 3")
+  
+  # Get a numeric value to use in the message
+  number_of_info_lines <- length(important_message_parts)
   
   # Generate and emit a formatted message
   emit_message(
-    "There (is/are) {number} problem(s)", # on line 1; singular/plural syntax
-    additional_info, # 2 additional lines (all separated with `/n`)
-    number = number_of_problems, # named argument; inserted above; informs text
-    .format = "{.f_name}IMPORTANT: {text}") # optional template
+    "There (is/are) {number} thing(s) to note", # on line 1; singular/plural syntax
+    important_message_parts, # 2 additional lines (all lines are separated with `/n`)
+    number = number_of_info_lines, # named argument; `number` inserted above
+    .format = "{.f_name} info: {text}") # optional template
 }
 ```
 
