@@ -12,7 +12,7 @@ and named arguments for string interpolation.}
 
 \item{.format}{a format template for a
 message. If not provided, the default template
-of \code{"`{.f_name}()` INFO: {text}"} will
+of \code{"{.f_name}: {text}"} will
 be used.}
 
 \item{.f_name}{the name of the function that
@@ -24,8 +24,9 @@ can be formed from multiple text objects.
 If a single text object is provided then the
 message will appear on a single line. If
 multiple text fragments are provided then
-they will be separated by newlines. A custom
-format could be provided by providing a
-messaging template that uses the notation
-scheme of the \code{glue} package.
+they will be separated by newlines (in the
+order provided). Custom formatting is
+possible by providing a messaging template
+that uses the string expression scheme used
+in the \code{glue} package.
 }
