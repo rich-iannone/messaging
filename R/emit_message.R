@@ -14,8 +14,7 @@
 #' and named arguments for string interpolation.
 #' @param .format a format template for a
 #' message. If not provided, the default template
-#' of \code{"{.f_name}: {text}"} will
-#' be used.
+#' of \code{"{.f_name}: {text}"} will be used.
 #' @param .f_name the name of the function that
 #' relates to the message.
 #' @param .issue a logical value that indicates
