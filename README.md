@@ -8,11 +8,7 @@ The goal of **messaging** is to provides a toolset for creating and issuing nice
 Example for Emitting Messages
 -----------------------------
 
-Below is a function that uses the `emit_message()` function to just display a message. Within the main function body, we can create/collect character and numeric values and compose our message with a combination of these function-scope objects and templating strings in the `emit_message()` function. Unnamed argument values are components of the message, and several of these can be included (newlines will separate them). Named arguments (e.g., `number = 3`, `level = "high"`, etc.) provide values (numerical or textual) for the message components. Using curly braces, we can provide placeholders for interpolation of those named values (e.g., `The number is {number} and this is considered {level}`).
-
-If there is interpolation of numerical values, there is also the option to provide singular and plural forms of words in the relevant statements. Simply enclose the singular and plural alternatives in parentheses and the function will finalize the statement based on the associated numerical value. Some syntax examples are: `(is/are)`, `analys(is/es)`, `result(s)`.
-
-Here is the `yield_a_message()` function.
+For for the purpose of demonstrating how **messaging** can help you format and issue messages, we can create a function (`yield_a_message()`) that uses the `emit_message()` function for the sole purpose of displaying a message.
 
 ``` r
 library(messaging)
@@ -42,6 +38,12 @@ yield_a_message <- function() {
     .format = "{.f_name} info: {text}") # optional template
 }
 ```
+
+Within the main function body, there's the creation of character (`important_message_parts`) and numeric (`number_of_info_lines`) values that will help us compose our message. This combination of function-scope objects will work alongside templated expression strings in the `emit_message()` function. Multiple expression strings can be provided to `emit_message()` to serve as components of the message (newlines will separate each of the expressions provided).
+
+Using curly braces, we can enable text interpolation (e.g., `The number is {number} and this is considered {level}`) where named arguments (e.g., `number = 3`, `level = "high"`, etc.) provide the values for the message components.
+
+If there is interpolation of numerical values, there is also the option to provide singular and plural forms for words associated with the the values. Simply enclose the singular and plural alternatives in parentheses and the function will finalize the statement based on the associated numerical values. Some syntax examples are: `(is/are)`, `analys(is/es)`, `result(s)`.
 
 Upon calling `yield_a_message()` we see that a message does appear and that the text on the first line has been processed such that it's grammatically correct.
 
