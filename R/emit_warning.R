@@ -18,91 +18,100 @@
 #' be used.
 #' @param .f_name the name of the function that
 #' caused the warning.
+#' @param .issue a logical value that indicates
+#' whether a warning should be issued at all.
 #' @importFrom glue glue
 #' @importFrom stringr str_replace_all
 #' @export
 emit_warning <- function(...,
                          .format = NULL,
-                         .f_name = TRUE) {
+                         .f_name = TRUE,
+                         .issue = TRUE) {
 
-  # Collect the list of input components
-  input_components <- list(...)
+  # If `.issue` evaluates to TRUE then
+  # follow through to formatting and emitting
+  # a warning
+  if (.issue) {
 
-  # Get a list of named, numeric input components
-  named_numeric_input_components <-
-    get_named_numeric_input_components(
-      input_components = input_components)
+    # Collect the list of input components
+    input_components <- list(...)
 
-  # Get a list of named, nonnumeric input components
-  named_nonnumeric_input_components <-
-    get_named_nonnumeric_input_components(
-      input_components = input_components)
+    # Get a list of named, numeric input components
+    named_numeric_input_components <-
+      get_named_numeric_input_components(
+        input_components = input_components)
 
-  # Get a list of unnamed input components
-  unnamed_input_components <-
-    get_unnamed_input_components(
-      input_components = input_components)
+    # Get a list of named, nonnumeric input components
+    named_nonnumeric_input_components <-
+      get_named_nonnumeric_input_components(
+        input_components = input_components)
 
-  # Get a vector of names for all named, numeric inputs
-  numeric_refs <- names(named_numeric_input_components)
+    # Get a list of unnamed input components
+    unnamed_input_components <-
+      get_unnamed_input_components(
+        input_components = input_components)
 
-  # Get a vector of names for all named, nonnumeric inputs
-  nonnumeric_refs <- names(named_nonnumeric_input_components)
+    # Get a vector of names for all named, numeric inputs
+    numeric_refs <- names(named_numeric_input_components)
 
-  # Get all text into a single-length character object
-  text <- squash_all_text(unnamed_input_components)
+    # Get a vector of names for all named, nonnumeric inputs
+    nonnumeric_refs <- names(named_nonnumeric_input_components)
 
-  # If a custom `.format` provided, then use that as
-  # the `format_str` object; otherwise, use the default
-  # format string
-  if (!is.null(.format) && is.character(.format)) {
+    # Get all text into a single-length character object
+    text <- squash_all_text(unnamed_input_components)
 
-    format_str <- .format[1]
+    # If a custom `.format` provided, then use that as
+    # the `format_str` object; otherwise, use the default
+    # format string
+    if (!is.null(.format) && is.character(.format)) {
 
-  } else if (is.null(.format)) {
+      format_str <- .format[1]
 
-    format_str <- "{.f_name}: {text}"
-  }
+    } else if (is.null(.format)) {
 
-  # If `.f_name` is TRUE then obtain the function name
-  # that is the caller of this function
-  if (!is.null(.f_name) && is.logical(.f_name) && isTRUE(.f_name)) {
+      format_str <- "{.f_name}: {text}"
+    }
 
-    calling_fcn <- deparse(sys.call(-1))
+    # If `.f_name` is TRUE then obtain the function name
+    # that is the caller of this function
+    if (!is.null(.f_name) && is.logical(.f_name) && isTRUE(.f_name)) {
 
-    .f_name <-
-      stringr::str_replace_all(
-        calling_fcn,
-        pattern = "([a-z0-9_]*)(.*)",
-        replacement = "\\1") %>%
-      paste0("`", .) %>%
-      paste0("()`")
+      calling_fcn <- deparse(sys.call(-1))
 
-  } else if (is.null(.f_name) ||
-             !is.null(.f_name) && is.logical(.f_name) && !isTRUE(.f_name)) {
+      .f_name <-
+        stringr::str_replace_all(
+          calling_fcn,
+          pattern = "([a-z0-9_]*)(.*)",
+          replacement = "\\1") %>%
+        paste0("`", .) %>%
+        paste0("()`")
 
-    .f_name <- ""
+    } else if (is.null(.f_name) ||
+               !is.null(.f_name) && is.logical(.f_name) && !isTRUE(.f_name)) {
 
-  } else if (!is.null(.f_name) && is.character(.f_name)) {
+      .f_name <- ""
 
-    .f_name <- .f_name[1] %>% paste0("`", .) %>% paste0("()` ")
-  }
+    } else if (!is.null(.f_name) && is.character(.f_name)) {
 
-  # Incorporate the message text into the format string
-  format_str <-
-    glue::glue(format_str) %>%
-    as.character()
+      .f_name <- .f_name[1] %>% paste0("`", .) %>% paste0("()` ")
+    }
 
-  # If there is syntax for singular and plural noun forms,
-  # modify the `format_str` object to finalize the wording
-  format_str <-
+    # Incorporate the message text into the format string
+    format_str <-
+      glue::glue(format_str) %>%
+      as.character()
+
+    # If there is syntax for singular and plural noun forms,
+    # modify the `format_str` object to finalize the wording
+    format_str <-
+      format_str %>%
+      reprocess_grammar(
+        named_numeric_input_components = named_numeric_input_components,
+        named_nonnumeric_input_components = named_nonnumeric_input_components)
+
+    # Issue the warning
     format_str %>%
-    reprocess_grammar(
-      named_numeric_input_components = named_numeric_input_components,
-      named_nonnumeric_input_components = named_nonnumeric_input_components)
-
-  # Issue the warning
-  format_str %>%
-    as.character() %>%
-    warning(call. = FALSE)
+      as.character() %>%
+      warning(call. = FALSE)
+  }
 }
