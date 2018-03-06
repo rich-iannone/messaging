@@ -166,7 +166,7 @@ reprocess_grammar <- function(format_str,
       format_str <-
         stringr::str_replace_all(
           string = format_str,
-          pattern = fixed(sing_plu_tbl[i, ]$alternates),
+          pattern = stringr::fixed(sing_plu_tbl[i, ]$alternates),
           replacement = sing_plu_tbl[i, ]$form)
     }
 
@@ -175,7 +175,7 @@ reprocess_grammar <- function(format_str,
       format_str <-
         stringr::str_replace_all(
           string = format_str,
-          pattern = fixed(sing_plu_tbl[i, ]$alternates),
+          pattern = stringr::fixed(sing_plu_tbl[i, ]$alternates),
           replacement = sing_plu_tbl[i, ]$form)
     }
   }
