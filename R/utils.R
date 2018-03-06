@@ -85,6 +85,59 @@ get_unnamed_input_components <- function(input_components) {
   input_components[unnamed_input_indices]
 }
 
+#' Process the format string, which is a template for
+#' the output messages
+#' @param .format the format string which may or may
+#' not be supplied by the user.
+#' @noRd
+process_format_str <- function(.format = .format) {
+
+  if (!is.null(.format) && is.character(.format)) {
+
+    format_str <- .format[1]
+
+  } else if (is.null(.format)) {
+
+    format_str <- "{.f_name}: {text}"
+  }
+
+  format_str
+}
+
+#' Process the function name to be used in the
+#' output messages
+#' @param .f_name the name of the calling function as
+#' provided by the user.
+#' @param calling_fcn the name of the calling function
+#' as determined by deparsing the function call stack.
+#' @importFrom stringr str_replace_all
+#' @noRd
+process_function_name <- function(.f_name = .f_name,
+                                  calling_fcn = calling_fcn) {
+
+  if (!is.null(.f_name) && is.logical(.f_name) && isTRUE(.f_name)) {
+
+    .f_name <-
+      stringr::str_replace_all(
+        calling_fcn,
+        pattern = "([a-z0-9_]*)(.*)",
+        replacement = "\\1") %>%
+      paste0("`", .) %>%
+      paste0("()`")
+
+  } else if (is.null(.f_name) ||
+             !is.null(.f_name) && is.logical(.f_name) && !isTRUE(.f_name)) {
+
+    .f_name <- ""
+
+  } else if (!is.null(.f_name) && is.character(.f_name)) {
+
+    .f_name <- .f_name[1] %>% paste0("`", .) %>% paste0("()` ")
+  }
+
+  .f_name
+}
+
 #' Reprocess the grammar in the output messages
 #' @param format_str a `format_str` object that is
 #' to undergo processing.
