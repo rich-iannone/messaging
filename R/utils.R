@@ -92,7 +92,7 @@ get_unnamed_input_components <- function(input_components) {
 #' named, numeric input components.
 #' @param named_nonnumeric_input_components a list of
 #' named, nonnumeric input components.
-#' @importFrom stringr str_detect str_extract_all str_replace
+#' @importFrom stringr str_detect str_extract_all str_replace fixed
 #' @importFrom dplyr mutate tibble case_when
 #' @noRd
 reprocess_grammar <- function(format_str,
