@@ -39,14 +39,14 @@ yield_a_message <- function() {
       "* message info part 3")
   
   # Get a numeric value to use in the message
-  number_of_info_lines <- length(important_message_parts)
+  n_info_lines <- length(important_message_parts)
   
   # Generate and emit a formatted message
   emit_message(
     "There (is/are) {number} thing(s) to note", # on line 1; singular/plural syntax
-    important_message_parts, # 2 additional lines (all lines are separated with `/n`)
-    number = number_of_info_lines, # named argument; `number` inserted above
-    .format = "{.f_name} info: {text}") # optional template
+    important_message_parts, # 3 additional lines (all lines are separated with `/n`)
+    number = n_info_lines, # a named argument; `n_info_lines` inserted into {number}
+    .format = "{.f_name} info: {text}") # an optional template
 }
 ```
 
