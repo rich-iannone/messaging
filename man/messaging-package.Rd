@@ -21,7 +21,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Richard Iannone \email{riannone@me.com}
+\strong{Maintainer}: Richard Iannone \email{riannone@me.com} (0000-0003-3925-190X)
 
 }
 \keyword{internal}
