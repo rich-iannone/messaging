@@ -1,6 +1,6 @@
 context("Create a formatted message")
 
-test_that("Creating a valid `agent` object is possible", {
+test_that("Emitting a properly-formatted message from a function is possible", {
 
   library(messaging)
 
