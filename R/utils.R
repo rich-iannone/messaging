@@ -1,4 +1,3 @@
-
 #' Squash all text provided with a common separator
 #' @param ... a collection of text objects, which can
 #' exist as a mixture of lists, vectors, or named
@@ -121,9 +120,9 @@ process_function_name <- function(.f_name = .f_name,
       stringr::str_replace_all(
         calling_fcn,
         pattern = "([a-z0-9_]*)(.*)",
-        replacement = "\\1") %>%
-      paste0("`", .) %>%
-      paste0("()`")
+        replacement = "\\1")
+
+    .f_name <- paste0("`", .f_name, "()`")
 
   } else if (is.null(.f_name) ||
              !is.null(.f_name) && is.logical(.f_name) && !isTRUE(.f_name)) {
@@ -132,7 +131,7 @@ process_function_name <- function(.f_name = .f_name,
 
   } else if (!is.null(.f_name) && is.character(.f_name)) {
 
-    .f_name <- .f_name[1] %>% paste0("`", .) %>% paste0("()` ")
+    .f_name <- paste0("`", .f_name[1], "()`")
   }
 
   .f_name
@@ -152,6 +151,9 @@ reprocess_grammar <- function(format_str,
                               named_numeric_input_components,
                               named_nonnumeric_input_components) {
 
+  # Create binding for a global variable
+  plural <- NULL
+
   # Get a vector of names for all named, numeric inputs
   numeric_refs <- names(named_numeric_input_components)
 
@@ -163,8 +165,10 @@ reprocess_grammar <- function(format_str,
     sing_plu_tbl <-
       format_str %>%
       stringr::str_extract_all(pattern = "\\([a-zA-Z/]+\\)") %>%
-      unlist() %>%
-      dplyr::tibble(alternates = .) %>%
+      unlist()
+
+    sing_plu_tbl <-
+      dplyr::tibble(alternates = sing_plu_tbl) %>%
       dplyr::mutate(singular = case_when(
         stringr::str_detect(
           string = alternates,
@@ -275,4 +279,3 @@ reprocess_grammar <- function(format_str,
 
   format_str
 }
-
