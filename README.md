@@ -85,6 +85,64 @@ yield_a_message()
 #> * message info part 3
 ```
 
+We can also emit warnings and errors by using the `emit_warning()` and
+`emit_error()` functions within those functions of our own design.
+Here’s a function that might provide a warning (if the sum of x and y
+is greater than 100):
+
+``` r
+might_warn_you <- function(x, y) {
+  
+  sum_xy <- x + y
+
+  if (sum_xy > 100) {
+    emit_warning(
+      "This value ({sum_xy}) is greater than 100.",
+      sum_xy = sum_xy)
+  }
+  
+  return(sum_xy)
+}
+```
+
+``` r
+might_warn_you(40, 50)
+#> [1] 90
+```
+
+``` r
+might_warn_you(60, 50)
+#> Warning: `might_warn_you()`: This value (110) is greater than 100.
+#> [1] 110
+```
+
+We can exit a function early with a message using the `emit_error()`
+function:
+
+``` r
+will_stop_if_not_careful <- function(x, y) {
+  
+  sum_xy <- x + y
+
+  if (sum_xy > 100) {
+    emit_error(
+      "This value ({sum_xy}) is greater than 100. That is bad.",
+      sum_xy = sum_xy)
+  }
+  
+  return(sum_xy)
+}
+```
+
+``` r
+will_stop_if_not_careful(60, 50)
+```
+
+Here is a reproduction of the error
+    message:
+
+    Error: `will_stop_if_not_careful()`: This value (110) is greater than 100. That is bad.
+
 ### Installation of the package
 
 **messaging** is used in an R environment. If you don’t have an R
