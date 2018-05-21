@@ -143,7 +143,7 @@ Here is a reproduction of the error
 
     Error: `will_stop_if_not_careful()`: This value (110) is greater than 100. That is bad.
 
-### Installation of the package
+## Installation of the package
 
 **messaging** is used in an R environment. If you don’t have an R
 installation, it can be obtained from the [**Comprehensive R Archive
