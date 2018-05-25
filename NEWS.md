@@ -1,3 +1,3 @@
-# messaging 0.0.0.9000
+# messaging 0.1
 
-* Added a `NEWS.md` file to track changes to the package.
+* Add functions `emit_message()`, `emit_warning()`, and `emit_error()`
