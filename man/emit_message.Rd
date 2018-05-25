@@ -8,7 +8,11 @@ emit_message(..., .format = NULL, .f_name = TRUE, .issue = TRUE)
 }
 \arguments{
 \item{...}{a collection of string expressions
-and named arguments for string interpolation.}
+and named arguments for string interpolation.
+Bare strings will be pasted together and
+separated by newlines. Named arguments are
+used to provide values for string interpolation
+in the message.}
 
 \item{.format}{a format template for a
 message. If not provided, the default template
@@ -35,4 +39,34 @@ order provided). Custom formatting is
 possible by providing a messaging template
 that uses the string expression scheme used
 in the \code{glue} package.
+}
+\examples{
+# Write a function that yields a message with
+# the requested number of info lines
+yield_a_message <- function(msgs) {
+
+  if (msgs > 3) msgs <- 3
+
+  # Create some strings can serve as additional
+  # info for the message
+  message_components <-
+    c("* message info 1",
+      "* message info 2",
+      "* message info 3")
+
+  # Generate and emit a formatted message
+  emit_message(
+    "There (is/are) {number} thing(s) to note",
+    message_components[1:msgs],
+    number = msgs,
+    .format = "{.f_name} info: {text}")
+}
+
+# When that function is called, a formatted
+# message will appear; here are some examples:
+yield_a_message(msgs = 3)
+
+yield_a_message(msgs = 2)
+
+yield_a_message(msgs = 1)
 }
