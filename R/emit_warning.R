@@ -12,6 +12,10 @@
 #' in the \code{glue} package.
 #' @param ... a collection of string expressions
 #' and named arguments for string interpolation.
+#' Bare strings will be pasted together and
+#' separated by newlines. Named arguments are
+#' used to provide values for string interpolation
+#' in the message.
 #' @param .format a format template for a
 #' message. If not provided, the default template
 #' of \code{"{.f_name}: {text}"} will be used.
@@ -22,6 +26,49 @@
 #' @param .issue a logical value that indicates
 #' whether a warning should be issued at all.
 #' @importFrom glue glue
+#' @examples
+#' \dontrun{
+#' # Write a function that yields a warning with
+#' # the requested number of info lines
+#' yield_a_warning <- function(msgs) {
+#'
+#'   if (msgs > 3) msgs <- 3
+#'
+#'   # Create some strings can serve as additional
+#'   # info for the message
+#'   message_components <-
+#'     c("* message info 1",
+#'       "* message info 2",
+#'       "* message info 3")
+#'
+#'   # Generate and emit a formatted message
+#'   emit_warning(
+#'     "There (is/are) {number} thing(s) to note",
+#'     message_components[1:msgs],
+#'     number = msgs,
+#'     .format = "{.f_name} info: {text}")
+#' }
+#'
+#' # When that function is called, a formatted
+#' # message will appear; here are some examples:
+#' yield_a_warning(msgs = 3)
+#' #> Warning message:
+#' #> `yield_a_warning()` info: There are 3 things to note
+#' #> * message info 1
+#' #> * message info 2
+#' #> * message info 3
+#'
+#' yield_a_warning(msgs = 2)
+#' #> Warning message:
+#' #> `yield_a_warning()` info: There are 2 things to note
+#' #> * message info 1
+#' #> * message info 2
+#'
+#' yield_a_warning(msgs = 1)
+#' #> Warning message:
+#' #> `yield_a_warning()` info: There is 1 thing to note
+#' #> * message info 1
+#' }
 #' @export
 emit_warning <- function(...,
                          .format = NULL,
