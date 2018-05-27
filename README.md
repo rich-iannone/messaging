@@ -10,7 +10,7 @@ status](https://www.r-pkg.org/badges/version/messaging)](https://cran.r-project.
 
 # The **messaging** Package
 
-The goal of **messaging** is to provides a toolset for creating and
+The goal of **messaging** is to provide a toolset for creating and
 issuing nicely-formatted text within R diagnostic messages and those
 messages given during warnings and errors. The formatting of the
 messages can be customized using templating features. Issues with
@@ -87,8 +87,8 @@ yield_a_message()
 
 We can also emit warnings and errors by using the `emit_warning()` and
 `emit_error()` functions within those functions of our own design.
-Here’s a function that might provide a warning (if the sum of x and y
-is greater than 100):
+Here’s a function that might provide a warning (if the sum of `x` and
+`y` is greater than 100):
 
 ``` r
 might_warn_you <- function(x, y) {
@@ -105,10 +105,14 @@ might_warn_you <- function(x, y) {
 }
 ```
 
+This won’t warn:
+
 ``` r
 might_warn_you(40, 50)
 #> [1] 90
 ```
+
+This warns and provides the custom warning.
 
 ``` r
 might_warn_you(60, 50)
@@ -134,6 +138,8 @@ will_stop_if_not_careful <- function(x, y) {
 }
 ```
 
+This function call will stop the function:
+
 ``` r
 will_stop_if_not_careful(60, 50)
 ```
@@ -149,8 +155,14 @@ Here is a reproduction of the error
 installation, it can be obtained from the [**Comprehensive R Archive
 Network (CRAN)**](https://cran.r-project.org/).
 
-You can install the development version of **messaging** from **GitHub**
-using the **devtools** package.
+You can install **messaging** from **CRAN** with `install.packages()`.
+
+``` r
+install.packages("messaging")
+```
+
+Also, the development version of **messaging** from **GitHub** can be
+installed using the **devtools** package.
 
 ``` r
 devtools::install_github("rich-iannone/messaging")
